@@ -3,15 +3,20 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:emulators\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:emulators": "firebase emulators:start --only functions,firestore",
+    "dev:full": "firebase emulators:start",
     "build": "cd frontend && npm run build",
     "deploy": "npm run build && firebase deploy",
     "deploy:hosting": "npm run build && firebase deploy --only hosting",
     "deploy:functions": "firebase deploy --only functions",
+    "deploy:rules": "firebase deploy --only firestore:rules",
     "emulators": "firebase emulators:start",
     "logs": "firebase functions:log"
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "firebase-tools": "^13.0.0"
   }
 }

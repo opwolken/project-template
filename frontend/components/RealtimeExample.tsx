@@ -7,7 +7,7 @@ import { collection, onSnapshot, addDoc, serverTimestamp } from 'firebase/firest
 interface Item {
   id: string;
   name: string;
-  created_at: any;
+  created_at: unknown;
 }
 
 export default function RealtimeExample() {

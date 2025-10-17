@@ -68,19 +68,31 @@ service cloud.firestore {
 
 ## 🛠️ Development
 
-### Frontend lokaal draaien
+### Start Frontend + Backend (Aanbevolen)
 ```bash
-cd frontend
+# Vanuit root - start alles tegelijk
 npm run dev
+
+# Dit start:
+# - Frontend op http://localhost:3000
+# - Python Functions emulator
+# - Firestore emulator
+# - Emulator UI op http://localhost:4000
+```
+
+### Alleen Frontend
+```bash
+npm run dev:frontend
 # Open http://localhost:3000
 ```
 
-### Firebase emulators (hosting + functions + firestore)
+### Alleen Emulators
 ```bash
-# Vanuit root
-firebase emulators:start
-# Open http://localhost:5000
+npm run dev:emulators
+# Functions + Firestore emulators
 ```
+
+**Zie [DEVELOPMENT.md](DEVELOPMENT.md) voor gedetailleerde development workflow!**
 
 ## 📦 Deployment
 
@@ -133,10 +145,35 @@ Frontend gebruikt Firestore client SDK voor real-time updates:
 - Automatische SSL
 - Global CDN
 
+## 🔐 Authenticatie & Beveiliging
+
+Deze template heeft een **complete Google login module** geïmplementeerd!
+
+### ⚡ Quick Start
+Zie **[QUICKSTART_AUTH.md](QUICKSTART_AUTH.md)** voor een snelle 5-minuten setup.
+
+### 📖 Gedetailleerde Gids
+Zie **[AUTHENTICATIE_SETUP.md](AUTHENTICATIE_SETUP.md)** voor volledige documentatie.
+
+### Wat is er geïmplementeerd:
+- ✅ Google Authentication (Sign in with Google)
+- ✅ Gebruikersautorisatie via Firestore
+- ✅ Beveiligde routes (`/dashboard`, `/admin`)
+- ✅ Admin panel voor gebruikersbeheer
+- ✅ AuthContext voor state management
+- ✅ Firestore Security Rules
+
+### Pagina's:
+- `/` - Openbare home pagina
+- `/dashboard` - Beveiligd dashboard (vereist login + autorisatie)
+- `/admin` - Gebruikersbeheer (vereist login + autorisatie)
+- `/unauthorized` - Getoond wanneer niet geautoriseerd
+
 ## 🎯 Volgende Stappen
 
-1. **Authenticatie toevoegen**: Firebase Authentication
+1. ~~**Authenticatie toevoegen**~~: ✅ Firebase Authentication geïmplementeerd!
 2. **Storage**: Firebase Storage voor file uploads
-3. **Security Rules**: Verfijn Firestore rules voor productie
+3. ~~**Security Rules**~~: ✅ Firestore rules toegevoegd
 4. **Analytics**: Google Analytics integratie
 5. **Testing**: Firebase Emulator Suite gebruiken
+6. **Email verificatie**: Extra security layer toevoegen
