@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Project Template
 
-## Getting Started
+Next.js frontend + Python backend op Firebase
 
-First, run the development server:
+## 📁 Structuur
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+template-project/
+├── frontend/          # Next.js app (static export)
+│   ├── app/          # App router pages
+│   ├── public/       # Static assets (images, fonts)
+│   └── out/          # Build output (gegenereerd, niet committen)
+├── api/              # Python Firebase Functions
+│   ├── main.py       # API endpoints
+│   └── requirements.txt
+├── firebase.json     # Firebase configuratie
+└── .firebaserc       # Firebase project ID
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Frontend installeren
+```bash
+cd frontend
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Firebase CLI installeren
+```bash
+npm install -g firebase-tools
+firebase login
+```
 
-## Learn More
+### 3. Firebase project aanmaken/linken
+```bash
+# Maak nieuw project op https://console.firebase.google.com
+# Update .firebaserc met je project ID
+firebase use --add
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Python dependencies (optioneel lokaal)
+```bash
+cd api
+python -m venv venv
+source venv/bin/activate  # macOS/Linux
+pip install -r requirements.txt
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Development
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Frontend lokaal draaien
+```bash
+cd frontend
+npm run dev
+# Open http://localhost:3000
+```
 
-## Deploy on Vercel
+### Firebase emulators (hosting + functions)
+```bash
+# Vanuit root
+npm run build:frontend
+firebase emulators:start
+# Open http://localhost:5000
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📦 Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Build en deploy
+```bash
+# Vanuit root
+cd frontend && npm run build && cd ..
+firebase deploy
+```
+
+### Alleen hosting
+```bash
+firebase deploy --only hosting
+```
+
+### Alleen functions
+```bash
+firebase deploy --only functions
+```
+
+## 🔗 API Endpoints
+
+- `GET /api/health` - Health check
+- `GET /api/hello?name=John` - Hello endpoint
+
+## 📝 Notities
+
+- `public/` bevat statische assets (bijv. images, favicon)
+- `out/` is build output, wordt automatisch gegenereerd
+- Python backend draait als Firebase Functions
+- Frontend wordt als statische site gehost op Firebase Hosting

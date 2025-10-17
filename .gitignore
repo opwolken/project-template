@@ -1,78 +1,28 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-# Firebase - ignore local state, caches, logs and build artifacts
+# Firebase
 .firebase/
-.firebase/*
-.firebaserc
-firebase-debug.log*
-firebase-debug.*.log*
-firebase-tools-debug.log*
-firebase-debug-*.log
+firebase-debug*.log
 .runtimeconfig.json
 
-# Firebase Hosting
-hosting/.cache
-*.cache
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+api/.venv/
 
-# Firebase Functions
-/functions/node_modules/
-/functions/.env
-/functions/package-lock.json
-/functions/lib/
+# Node
+node_modules/
+frontend/node_modules/
+frontend/.next/
+frontend/out/
 
-# Firebase Emulators and other artifacts
-/firebase-*.zip
-/.firebase/
-/emulator-ui/
+# OS
+.DS_Store
 
-# Logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Environment files (local configs)
-/.env.*
-
-# local node modules fallback
-node_modules
+# IDE
+.vscode/
+.idea/
