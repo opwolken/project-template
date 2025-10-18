@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { colors, shadows } from '@/lib/design-system';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
@@ -7,17 +8,39 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
 }
 
-const variantClasses = {
-  primary: 'bg-neutral-900 text-white hover:bg-neutral-800 active:bg-neutral-700',
-  secondary: 'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700',
-  outline: 'border-2 border-neutral-300 text-neutral-900 hover:bg-neutral-50 active:bg-neutral-100',
-  ghost: 'text-neutral-700 hover:bg-neutral-100 active:bg-neutral-200',
-  danger: 'bg-red-500 text-white hover:bg-red-600 active:bg-red-700',
+const variantStyles = {
+  primary: {
+    backgroundColor: colors.accent.primary,
+    color: colors.text.inverse,
+    ':hover': { backgroundColor: colors.accent.hover },
+  },
+  secondary: {
+    backgroundColor: colors.surface,
+    color: colors.text.primary,
+    border: `1px solid ${colors.border}`,
+    ':hover': { backgroundColor: colors.surfaceHover },
+  },
+  outline: {
+    backgroundColor: 'transparent',
+    color: colors.accent.primary,
+    border: `1px solid ${colors.accent.primary}`,
+    ':hover': { backgroundColor: colors.accent.light },
+  },
+  ghost: {
+    backgroundColor: 'transparent',
+    color: colors.text.secondary,
+    ':hover': { backgroundColor: colors.surfaceHover },
+  },
+  danger: {
+    backgroundColor: colors.error,
+    color: colors.text.inverse,
+    ':hover': { backgroundColor: '#7F1D1D' },
+  },
 };
 
 const sizeClasses = {
   sm: 'px-3 py-1.5 text-sm',
-  md: 'px-4 py-2 text-base',
+  md: 'px-4 py-2.5 text-base',
   lg: 'px-6 py-3 text-lg',
 };
 
@@ -30,18 +53,32 @@ export default function Button({
   disabled,
   ...props
 }: ButtonProps) {
+  const baseStyle = {
+    boxShadow: shadows.card,
+  };
+
   return (
     <button
       className={`
-        ${variantClasses[variant]}
         ${sizeClasses[size]}
         ${fullWidth ? 'w-full' : ''}
         font-medium rounded-lg
         transition-all duration-200
         disabled:opacity-50 disabled:cursor-not-allowed
-        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400
+        focus:outline-none focus:ring-2 focus:ring-offset-2
         ${className}
       `}
+      style={{
+        ...baseStyle,
+        backgroundColor: variant === 'primary' ? colors.accent.primary : 
+                        variant === 'secondary' ? colors.surface :
+                        variant === 'danger' ? colors.error : 'transparent',
+        color: variant === 'primary' || variant === 'danger' ? colors.text.inverse : 
+               variant === 'outline' ? colors.accent.primary :
+               colors.text.primary,
+        border: variant === 'secondary' ? `1px solid ${colors.border}` :
+                variant === 'outline' ? `1px solid ${colors.accent.primary}` : 'none',
+      }}
       disabled={disabled}
       {...props}
     >

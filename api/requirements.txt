@@ -1,2 +1,7 @@
 firebase-functions
 firebase-admin
+
+# AI & Search
+google-generativeai
+pillow
+requests

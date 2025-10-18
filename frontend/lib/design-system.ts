@@ -1,49 +1,47 @@
 /**
- * Design System - OpenAI geïnspireerd
- * Centraal bestand voor alle design tokens en standaarden
+ * Design System - Minimalistisch, Earthy, Refined
+ * Geïnspireerd door Spotify, Airbnb, OpenAI
  */
 
 export const colors = {
-  // Primary
-  primary: {
-    50: '#f0f9ff',
-    100: '#e0f2fe',
-    200: '#bae6fd',
-    300: '#7dd3fc',
-    400: '#38bdf8',
-    500: '#0ea5e9',
-    600: '#0284c7',
-    700: '#0369a1',
-    800: '#075985',
-    900: '#0c4a6e',
+  // Background & Surfaces
+  background: '#FAFAF9',      // off-white
+  surface: '#FFFFFF',         // pure white voor cards
+  surfaceHover: '#F5F5F4',    // subtle hover state
+  
+  // Text
+  text: {
+    primary: '#18181B',       // off-black
+    secondary: '#52525B',     // medium gray
+    tertiary: '#A1A1AA',      // light gray
+    inverse: '#FAFAF9',       // voor dark backgrounds
   },
-  // Neutral
-  neutral: {
-    50: '#f9fafb',
-    100: '#f3f4f6',
-    200: '#e5e7eb',
-    300: '#d1d5db',
-    400: '#9ca3af',
-    500: '#6b7280',
-    600: '#4b5563',
-    700: '#374151',
-    800: '#1f2937',
-    900: '#111827',
-    950: '#030712',
-  },
-  // Accent
+  
+  // Accent - Extra donker, bijna zwart met rode tint
   accent: {
-    purple: '#8b5cf6',
-    green: '#10b981',
-    orange: '#f59e0b',
-    red: '#ef4444',
-  }
+    primary: '#1A0A08',       // zeer donkerrood, bijna zwart
+    secondary: '#2C1410',     // iets lichter donkerrood
+    hover: '#3D1E18',         // hover state
+    light: '#FEF2F2',         // very light red voor backgrounds
+  },
+  
+  // Semantic
+  success: '#166534',         // dark green
+  warning: '#92400E',         // amber
+  error: '#991B1B',           // red
+  info: '#1E40AF',            // blue
+  
+  // Borders & Dividers
+  border: '#E4E4E7',          // subtle border
+  borderHover: '#D4D4D8',     // hover state
+  divider: '#F4F4F5',         // lighter divider
 } as const;
 
 export const typography = {
   // Font families
-  sans: 'var(--font-geist-sans)',
-  mono: 'var(--font-geist-mono)',
+  sans: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+  serif: '"Crimson Pro", Georgia, serif',
+  mono: '"JetBrains Mono", "Fira Code", monospace',
   
   // Font sizes
   sizes: {
@@ -89,19 +87,38 @@ export const spacing = {
 
 export const borderRadius = {
   none: '0',
-  sm: '0.25rem',   // 4px
-  md: '0.5rem',    // 8px
-  lg: '0.75rem',   // 12px
-  xl: '1rem',      // 16px
-  '2xl': '1.5rem', // 24px
-  full: '9999px',
+  sm: '0.25rem',   // 4px - subtiel
+  md: '0.5rem',    // 8px - standaard
+  lg: '0.75rem',   // 12px - cards
+  xl: '1rem',      // 16px - modals
+  full: '9999px',  // pills/avatars
 } as const;
 
 export const shadows = {
-  sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
-  md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
-  lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
-  xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+  // Jouw specifieke multi-layer shadow
+  soft: `
+    0px 1px 1px rgba(3, 7, 18, 0.02),
+    0px 5px 4px rgba(3, 7, 18, 0.04),
+    0px 12px 9px rgba(3, 7, 18, 0.06),
+    0px 20px 15px rgba(3, 7, 18, 0.08),
+    0px 32px 24px rgba(3, 7, 18, 0.10)
+  `,
+  // Subtielere variant voor kleine elements
+  card: `
+    0px 1px 1px rgba(3, 7, 18, 0.02),
+    0px 5px 4px rgba(3, 7, 18, 0.04),
+    0px 12px 9px rgba(3, 7, 18, 0.06)
+  `,
+  // Elevated voor dropdowns/modals
+  elevated: `
+    0px 1px 1px rgba(3, 7, 18, 0.02),
+    0px 5px 4px rgba(3, 7, 18, 0.04),
+    0px 12px 9px rgba(3, 7, 18, 0.06),
+    0px 20px 15px rgba(3, 7, 18, 0.08),
+    0px 32px 24px rgba(3, 7, 18, 0.10),
+    0px 48px 36px rgba(3, 7, 18, 0.12)
+  `,
+  none: 'none',
 } as const;
 
 export const breakpoints = {
