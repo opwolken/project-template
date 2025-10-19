@@ -111,12 +111,12 @@ export default function Admin() {
         style={{ 
           backgroundColor: colors.accent.primary,
           backgroundImage: `linear-gradient(135deg, ${colors.accent.primary}, ${colors.accent.secondary})`,
-          paddingTop: '8rem',
-          paddingBottom: '8rem',
+          paddingTop: '6rem',
+          paddingBottom: '6rem',
         }}
       >
-        <Container size="lg">
-          <div className="max-w-3xl relative z-10">
+        <Container size="md">
+          <div className="max-w-2xl relative z-10">
             <Badge 
               variant="accent" 
               size="md" 
@@ -134,19 +134,19 @@ export default function Admin() {
               className="mt-6 font-bold tracking-tight font-serif leading-tight" 
               style={{ 
                 color: colors.text.inverse,
-                fontSize: 'clamp(2.5rem, 7vw, 4rem)',
+                fontSize: 'clamp(2rem, 6vw, 3.5rem)',
               }}
             >
               Admin Panel
             </h1>
             
             <p 
-              className="mt-6 text-lg md:text-xl leading-relaxed" 
+              className="mt-6 text-base md:text-lg leading-relaxed" 
               style={{ 
                 color: colors.accent.lighter,
                 textAlign: 'justify',
                 hyphens: 'auto',
-                maxWidth: '600px',
+                maxWidth: '500px',
               }}
             >
               Beheer wie toegang heeft tot beveiligde pagina&apos;s. Voeg gebruikers toe of 
