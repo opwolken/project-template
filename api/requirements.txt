@@ -1,7 +1,7 @@
-firebase-functions
-firebase-admin
+firebase-functions==0.4.3
+firebase-admin==7.1.0
 
 # AI & Search
-google-generativeai
-pillow
-requests
+google-generativeai==0.8.3
+pillow==12.0.0
+requests==2.32.3
