@@ -27,14 +27,14 @@ export default function AIPage() {
 
   return (
     <div style={{ backgroundColor: colors.background, minHeight: '100vh', paddingTop: '64px' }}>
-      {/* Hero Section - Dark */}
+      {/* Hero Section - Dark - Compacter */}
       <section 
         className="relative overflow-hidden"
         style={{ 
           backgroundColor: colors.accent.primary,
           backgroundImage: `linear-gradient(135deg, ${colors.accent.primary}, ${colors.accent.secondary})`,
-          paddingTop: '6rem',
-          paddingBottom: '6rem',
+          paddingTop: '4rem',
+          paddingBottom: '4rem',
         }}
       >
         <Container size="md">
@@ -53,80 +53,35 @@ export default function AIPage() {
             </Badge>
             
             <h1 
-              className="mt-6 font-bold tracking-tight font-serif leading-tight" 
+              className="mt-4 font-bold tracking-tight font-serif leading-tight" 
               style={{ 
                 color: colors.text.inverse,
-                fontSize: 'clamp(2rem, 6vw, 3.5rem)',
+                fontSize: 'clamp(1.75rem, 5vw, 2.5rem)',
               }}
             >
               AI Features
             </h1>
             
             <p 
-              className="mt-6 text-base md:text-lg leading-relaxed" 
+              className="mt-4 text-sm md:text-base leading-relaxed" 
               style={{ 
                 color: colors.accent.lighter,
-                textAlign: 'justify',
-                hyphens: 'auto',
                 maxWidth: '500px',
               }}
             >
-              Chat met AI en doorzoek het web. Deze features gebruiken Gemini AI voor conversaties 
-              en Tavily voor intelligente web search met samenvattingen.
+              Chat met AI en doorzoek het web met intelligente samenvattingen.
             </p>
           </div>
         </Container>
       </section>
 
-      {/* Info Banner - Light */}
-      <section style={{ backgroundColor: colors.background, paddingTop: '6rem', paddingBottom: '3rem' }}>
-        <Container size="md">
-          <Card 
-            padding="lg" 
-            style={{ 
-              backgroundColor: colors.accent.lighter,
-              borderColor: colors.accent.light,
-            }}
-          >
-            <div className="flex items-start gap-4">
-              <div 
-                className="rounded-lg p-3"
-                style={{ backgroundColor: colors.accent.light }}
-              >
-                <Info className="w-6 h-6" style={{ color: colors.accent.primary }} />
-              </div>
-              <div className="flex-1">
-                <p 
-                  className="font-semibold mb-2 font-serif text-lg" 
-                  style={{ color: colors.text.primary }}
-                >
-                  AI Demo Omgeving
-                </p>
-                <p 
-                  className="text-sm leading-relaxed" 
-                  style={{ 
-                    color: colors.text.secondary,
-                    textAlign: 'justify',
-                    hyphens: 'auto',
-                  }}
-                >
-                  Deze features gebruiken Gemini AI voor chat en Tavily voor web search. 
-                  Voor productie gebruik heb je API keys nodig (zie .env.example in de api folder). 
-                  De huidige implementatie toont de functionaliteit en kan eenvoudig uitgebreid worden.
-                </p>
-              </div>
-            </div>
-          </Card>
-        </Container>
-      </section>
-
-      {/* Tab Navigation */}
-      <section style={{ backgroundColor: colors.background, paddingBottom: '3rem' }}>
+      {/* Tab Navigation - Direct na hero */}
+      <section style={{ backgroundColor: colors.background, paddingTop: '3rem', paddingBottom: '2rem' }}>
         <Container size="md">
           <div className="flex gap-3">
             <Button
               variant={activeTab === 'chat' ? 'primary' : 'outline'}
-              size="lg"
+              size="md"
               onClick={() => setActiveTab('chat')}
               style={{
                 transition: 'all 600ms cubic-bezier(0.65, 0, 0.35, 1)',
@@ -136,7 +91,7 @@ export default function AIPage() {
             </Button>
             <Button
               variant={activeTab === 'search' ? 'primary' : 'outline'}
-              size="lg"
+              size="md"
               onClick={() => setActiveTab('search')}
               style={{
                 transition: 'all 600ms cubic-bezier(0.65, 0, 0.35, 1)',
@@ -148,8 +103,8 @@ export default function AIPage() {
         </Container>
       </section>
 
-      {/* Content Section */}
-      <section style={{ backgroundColor: colors.background, paddingBottom: '6rem' }}>
+      {/* Content Section - Direct zichtbaar */}
+      <section style={{ backgroundColor: colors.background, paddingBottom: '3rem' }}>
         <Container size="md">
           <div>
             {activeTab === 'chat' && (
@@ -170,13 +125,42 @@ export default function AIPage() {
         </Container>
       </section>
 
-      {/* Features Grid - Dark Background with Image */}
+      {/* Info Banner - Onder de interface */}
+      <section style={{ backgroundColor: colors.background, paddingTop: '2rem', paddingBottom: '3rem' }}>
+        <Container size="md">
+          <Card 
+            padding="md" 
+            style={{ 
+              backgroundColor: colors.accent.lighter,
+            }}
+          >
+            <div className="flex items-start gap-3">
+              <div 
+                className="rounded p-2 flex-shrink-0"
+                style={{ backgroundColor: colors.accent.light }}
+              >
+                <Info className="w-5 h-5" style={{ color: colors.accent.primary }} />
+              </div>
+              <div className="flex-1">
+                <p 
+                  className="text-sm leading-snug" 
+                  style={{ color: colors.text.secondary }}
+                >
+                  Voor productie gebruik heb je API keys nodig (zie .env.example in de api folder).
+                </p>
+              </div>
+            </div>
+          </Card>
+        </Container>
+      </section>
+
+      {/* Features Grid - Dark Background with Image - Compacter */}
       <section 
         className="relative overflow-hidden"
         style={{ 
           backgroundColor: colors.accent.secondary,
-          paddingTop: '8rem',
-          paddingBottom: '8rem',
+          paddingTop: '4rem',
+          paddingBottom: '4rem',
         }}
       >
         {/* Background Image with Duotone */}
@@ -198,54 +182,48 @@ export default function AIPage() {
           }}
         />
         
-        <Container size="lg">
-          <div className="max-w-2xl mb-12 relative z-10">
+        <Container size="md">
+          <div className="max-w-2xl mb-8 relative z-10">
             <h2 
               className="font-bold font-serif" 
               style={{ 
                 color: colors.text.inverse,
-                fontSize: 'clamp(2rem, 5vw, 3rem)',
+                fontSize: 'clamp(1.5rem, 4vw, 2rem)',
               }}
             >
               Mogelijkheden
             </h2>
             <p 
-              className="mt-6 text-base md:text-lg leading-relaxed" 
+              className="mt-3 text-sm md:text-base leading-relaxed" 
               style={{ 
                 color: colors.accent.lighter,
-                textAlign: 'justify',
-                hyphens: 'auto',
               }}
             >
-              Ontdek wat je allemaal kunt doen met deze AI integraties. Van simpele vragen 
-              tot complexe zoekacties, alles is mogelijk.
+              Ontdek wat je allemaal kunt doen met deze AI integraties.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 relative z-10">
+          <div className="grid md:grid-cols-3 gap-4 relative z-10">
             <Card 
               hover 
-              padding="lg"
+              padding="md"
               style={{
                 transition: 'all 600ms cubic-bezier(0.65, 0, 0.35, 1)',
               }}
             >
-              <div className="mb-4" style={{ color: colors.accent.primary }}>
-                <MessageSquare className="w-12 h-12" />
+              <div className="mb-3" style={{ color: colors.accent.primary }}>
+                <MessageSquare className="w-10 h-10" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 font-serif" style={{ color: colors.text.primary }}>
+              <h3 className="text-lg font-semibold mb-2 font-serif" style={{ color: colors.text.primary }}>
                 AI Chat
               </h3>
               <p 
-                className="text-sm mb-4 leading-relaxed" 
+                className="text-sm mb-3 leading-relaxed" 
                 style={{ 
                   color: colors.text.secondary,
-                  textAlign: 'justify',
-                  hyphens: 'auto',
                 }}
               >
-                Chat met Gemini AI voor vragen, brainstorming, of hulp bij problemen. 
-                De AI begrijpt context en kan uitgebreide gesprekken voeren.
+                Chat met Gemini AI voor vragen, brainstorming, of hulp bij problemen.
               </p>
               <Badge variant="success" size="sm">
                 <Sparkles className="inline-block w-3 h-3 mr-1" /> Actief
@@ -254,27 +232,24 @@ export default function AIPage() {
 
             <Card 
               hover 
-              padding="lg"
+              padding="md"
               style={{
                 transition: 'all 600ms cubic-bezier(0.65, 0, 0.35, 1)',
               }}
             >
-              <div className="mb-4" style={{ color: colors.accent.primary }}>
-                <Search className="w-12 h-12" />
+              <div className="mb-3" style={{ color: colors.accent.primary }}>
+                <Search className="w-10 h-10" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 font-serif" style={{ color: colors.text.primary }}>
+              <h3 className="text-lg font-semibold mb-2 font-serif" style={{ color: colors.text.primary }}>
                 Web Search
               </h3>
               <p 
-                className="text-sm mb-4 leading-relaxed" 
+                className="text-sm mb-3 leading-relaxed" 
                 style={{ 
                   color: colors.text.secondary,
-                  textAlign: 'justify',
-                  hyphens: 'auto',
                 }}
               >
-                Doorzoek het web met Tavily en krijg relevante resultaten terug. 
-                Perfect voor research en het vinden van actuele informatie.
+                Doorzoek het web met Tavily en krijg relevante resultaten terug.
               </p>
               <Badge variant="success" size="sm">
                 <Sparkles className="inline-block w-3 h-3 mr-1" /> Actief
@@ -283,27 +258,24 @@ export default function AIPage() {
 
             <Card 
               hover 
-              padding="lg"
+              padding="md"
               style={{
                 transition: 'all 600ms cubic-bezier(0.65, 0, 0.35, 1)',
               }}
             >
-              <div className="mb-4" style={{ color: colors.accent.primary }}>
-                <Sparkles className="w-12 h-12" />
+              <div className="mb-3" style={{ color: colors.accent.primary }}>
+                <Sparkles className="w-10 h-10" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 font-serif" style={{ color: colors.text.primary }}>
+              <h3 className="text-lg font-semibold mb-2 font-serif" style={{ color: colors.text.primary }}>
                 AI Samenvatting
               </h3>
               <p 
-                className="text-sm mb-4 leading-relaxed" 
+                className="text-sm mb-3 leading-relaxed" 
                 style={{ 
                   color: colors.text.secondary,
-                  textAlign: 'justify',
-                  hyphens: 'auto',
                 }}
               >
-                Combineer search met AI voor slimme samenvattingen van zoekresultaten. 
-                Krijg het beste uit beide werelden.
+                Combineer search met AI voor slimme samenvattingen van zoekresultaten.
               </p>
               <Badge variant="success" size="sm">
                 <Sparkles className="inline-block w-3 h-3 mr-1" /> Actief
@@ -314,9 +286,9 @@ export default function AIPage() {
       </section>
 
       {/* Quick Actions - Light */}
-      <section style={{ backgroundColor: colors.background, paddingTop: '6rem', paddingBottom: '6rem' }}>
+      <section style={{ backgroundColor: colors.background, paddingTop: '3rem', paddingBottom: '3rem' }}>
         <Container size="md">
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/dashboard">
               <Button 
                 variant="outline" 

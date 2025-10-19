@@ -4,6 +4,8 @@ import { useState, useRef, useEffect } from 'react';
 import { useAsyncAction } from '@/lib/hooks/useAsyncAction';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
+import { colors, shadows } from '@/lib/design-system';
+import { Send, Trash2, StopCircle, Sparkles, User, Bot } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
@@ -36,29 +38,8 @@ export default function ChatInterface({
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
   const lastChunkTimeRef = useRef<number>(0);
-  const userScrolledUpRef = useRef<boolean>(false);
 
-  // Scroll alleen naar beneden als gebruiker niet omhoog heeft gescrolld
-  const scrollToBottom = () => {
-    if (!userScrolledUpRef.current && messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  // Check of gebruiker handmatig heeft gescrolld
-  const handleScroll = () => {
-    if (!messagesContainerRef.current) return;
-    
-    const { scrollTop, scrollHeight, clientHeight } = messagesContainerRef.current;
-    const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
-    
-    userScrolledUpRef.current = !isNearBottom;
-  };
-
-  // Auto-scroll bij nieuwe berichten (alleen als gebruiker onderaan is)
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+  // Geen auto-scroll meer - gebruiker heeft zelf controle
 
   const handleStreamingChat = async (
     userMessage: string, 
@@ -245,9 +226,6 @@ export default function ChatInterface({
     const userMessage = input.trim();
     setInput('');
 
-    // Reset scroll state - we want to scroll for new messages
-    userScrolledUpRef.current = false;
-
     // Add user message
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
 
@@ -280,23 +258,39 @@ export default function ChatInterface({
   const isProcessing = loading || isStreaming;
 
   return (
-    <Card padding="lg">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h3 className="text-xl font-semibold text-neutral-900">{title}</h3>
-          <p className="text-sm text-neutral-600 mt-1">
-            Powered by Gemini AI {useStreaming && '• Streaming'}
-          </p>
+    <Card padding="none">
+      {/* Header */}
+      <div 
+        className="px-6 py-4 flex items-center justify-between"
+        style={{ 
+          backgroundColor: colors.accent.lighter,
+        }}
+      >
+        <div className="flex items-center gap-3">
+          <div 
+            className="p-2 rounded"
+            style={{ backgroundColor: colors.accent.light }}
+          >
+            <Sparkles className="w-5 h-5" style={{ color: colors.accent.primary }} />
+          </div>
+          <div>
+            <h3 className="font-semibold font-serif" style={{ color: colors.text.primary }}>
+              {title}
+            </h3>
+            <p className="text-xs" style={{ color: colors.text.secondary }}>
+              Powered by Gemini AI {useStreaming && '• Streaming'}
+            </p>
+          </div>
         </div>
         <div className="flex gap-2">
           {isStreaming && (
             <Button variant="ghost" size="sm" onClick={stopStreaming}>
-              Stop streaming
+              <StopCircle className="w-4 h-4 mr-1" /> Stop
             </Button>
           )}
           {messages.length > 0 && (
             <Button variant="ghost" size="sm" onClick={clearChat}>
-              Wis chat
+              <Trash2 className="w-4 h-4 mr-1" /> Wis
             </Button>
           )}
         </div>
@@ -305,128 +299,203 @@ export default function ChatInterface({
       {/* Chat messages */}
       <div 
         ref={messagesContainerRef}
-        onScroll={handleScroll}
-        className="space-y-4 mb-6 max-h-96 overflow-y-auto"
+        className="px-6 py-6 space-y-6 max-h-96 overflow-y-auto"
+        style={{ backgroundColor: colors.background }}
       >
         {messages.length === 0 ? (
-          <div className="text-center py-12 text-neutral-500">
-            <div className="text-4xl mb-3">💬</div>
-            <p>Begin een gesprek met de AI</p>
+          <div className="text-center py-16" style={{ color: colors.text.tertiary }}>
+            <div 
+              className="inline-flex p-4 rounded-lg mb-4"
+              style={{ backgroundColor: colors.accent.lighter }}
+            >
+              <Bot className="w-8 h-8" style={{ color: colors.accent.primary }} />
+            </div>
+            <p className="text-sm">Begin een gesprek met de AI</p>
           </div>
         ) : (
           messages.map((message, index) => (
             <div
               key={index}
-              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} mb-4`}
+              className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              {message.role === 'user' ? (
-                // User message: praatbubbel rechts, max 75% breedte
-                <div className="max-w-[75%]">
-                  <div className="bg-neutral-200 rounded-2xl rounded-tr-sm px-4 py-3 shadow-sm">
-                    <p className="text-sm text-neutral-900 whitespace-pre-wrap">
+              {message.role === 'assistant' && (
+                <div 
+                  className="flex-shrink-0 w-8 h-8 rounded flex items-center justify-center"
+                  style={{ backgroundColor: colors.accent.lighter }}
+                >
+                  <Bot className="w-5 h-5" style={{ color: colors.accent.primary }} />
+                </div>
+              )}
+              
+              <div className={`${message.role === 'user' ? 'max-w-[75%]' : 'flex-1'}`}>
+                {message.role === 'user' ? (
+                  <div 
+                    className="rounded-lg px-4 py-3"
+                    style={{ 
+                      backgroundColor: colors.accent.primary,
+                      color: colors.text.inverse,
+                      boxShadow: shadows.card,
+                    }}
+                  >
+                    <p className="text-sm whitespace-pre-wrap leading-relaxed">
                       {message.content}
                     </p>
                   </div>
-                </div>
-              ) : (
-                // AI message: volle breedte, geen bubble
-                <div className="w-full">
-                  {message.streaming && (
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-2 h-2 bg-primary-500 rounded-full animate-pulse" />
-                      <span className="text-xs text-neutral-500">AI is aan het typen...</span>
-                    </div>
-                  )}
-                  <div 
-                    className="text-sm prose prose-sm max-w-none text-neutral-900"
-                    style={{
-                      animation: message.streaming ? 'fadeIn 0.35s ease-in' : 'none'
-                    }}
-                  >
-                    <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      rehypePlugins={[rehypeHighlight]}
-                      components={{
-                        // Styling voor code blocks
-                        code: ({ className, children, ...props }) => {
-                          const match = /language-(\w+)/.exec(className || '');
-                          return match ? (
-                            <code className={className} {...props}>
-                              {children}
-                            </code>
-                          ) : (
-                            <code className="bg-neutral-200 px-1.5 py-0.5 rounded text-xs" {...props}>
-                              {children}
-                            </code>
-                          );
-                        },
-                        // Styling voor links
-                        a: ({ children, ...props }) => (
-                          <a 
-                            className="text-primary-600 hover:underline font-medium" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            {...props}
-                          >
-                            {children}
-                          </a>
-                        ),
-                        // Styling voor lists
-                        ul: ({ children, ...props }) => (
-                          <ul className="list-disc list-inside space-y-1 my-2" {...props}>
-                            {children}
-                          </ul>
-                        ),
-                        ol: ({ children, ...props }) => (
-                          <ol className="list-decimal list-inside space-y-1 my-2" {...props}>
-                            {children}
-                          </ol>
-                        ),
-                        // Styling voor paragraphs
-                        p: ({ children, ...props }) => (
-                          <p className="mb-2 last:mb-0" {...props}>
-                            {children}
-                          </p>
-                        ),
+                ) : (
+                  <div className="space-y-2">
+                    {message.streaming && (
+                      <div className="flex items-center gap-2">
+                        <div 
+                          className="w-1.5 h-1.5 rounded-full animate-pulse" 
+                          style={{ backgroundColor: colors.accent.primary }}
+                        />
+                        <span className="text-xs" style={{ color: colors.text.tertiary }}>
+                          Aan het typen...
+                        </span>
+                      </div>
+                    )}
+                    <div 
+                      className="text-sm prose prose-sm max-w-none"
+                      style={{
+                        color: colors.text.primary,
+                        animation: message.streaming ? 'fadeIn 0.35s ease-in' : 'none'
                       }}
                     >
-                      {message.content || (message.streaming ? '...' : '')}
-                    </ReactMarkdown>
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        rehypePlugins={[rehypeHighlight]}
+                        components={{
+                          code: ({ className, children, ...props }) => {
+                            const match = /language-(\w+)/.exec(className || '');
+                            return match ? (
+                              <code className={className} {...props}>
+                                {children}
+                              </code>
+                            ) : (
+                              <code 
+                                className="px-1.5 py-0.5 rounded text-xs font-mono"
+                                style={{ backgroundColor: colors.accent.lighter }}
+                                {...props}
+                              >
+                                {children}
+                              </code>
+                            );
+                          },
+                          a: ({ children, ...props }) => (
+                            <a 
+                              className="font-medium hover:underline" 
+                              style={{ color: colors.accent.primary }}
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              {...props}
+                            >
+                              {children}
+                            </a>
+                          ),
+                          ul: ({ children, ...props }) => (
+                            <ul className="list-disc list-inside space-y-1 my-2" {...props}>
+                              {children}
+                            </ul>
+                          ),
+                          ol: ({ children, ...props }) => (
+                            <ol className="list-decimal list-inside space-y-1 my-2" {...props}>
+                              {children}
+                            </ol>
+                          ),
+                          p: ({ children, ...props }) => (
+                            <p className="mb-2 last:mb-0 leading-relaxed" {...props}>
+                              {children}
+                            </p>
+                          ),
+                        }}
+                      >
+                        {message.content || (message.streaming ? '...' : '')}
+                      </ReactMarkdown>
+                    </div>
                   </div>
+                )}
+              </div>
+
+              {message.role === 'user' && (
+                <div 
+                  className="flex-shrink-0 w-8 h-8 rounded flex items-center justify-center"
+                  style={{ backgroundColor: colors.accent.light }}
+                >
+                  <User className="w-5 h-5" style={{ color: colors.accent.primary }} />
                 </div>
               )}
             </div>
           ))
         )}
         {(loading || isStreaming) && !messages.some(m => m.streaming) && (
-          <div className="flex justify-start mb-4">
-            <div className="flex items-center gap-2">
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-500" />
-              <span className="text-sm text-neutral-500">AI denkt na...</span>
+          <div className="flex items-center gap-3">
+            <div 
+              className="flex-shrink-0 w-8 h-8 rounded flex items-center justify-center"
+              style={{ backgroundColor: colors.accent.lighter }}
+            >
+              <Bot className="w-5 h-5 animate-pulse" style={{ color: colors.accent.primary }} />
             </div>
+            <span className="text-sm" style={{ color: colors.text.tertiary }}>
+              AI denkt na...
+            </span>
           </div>
         )}
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input form */}
-      <form onSubmit={handleSubmit} className="flex gap-2">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={placeholder}
-          disabled={isProcessing}
-          className="flex-1 px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:bg-neutral-50 disabled:text-neutral-500"
-        />
-        <Button
-          type="submit"
-          disabled={isProcessing || !input.trim()}
-          variant="primary"
-        >
-          {isProcessing ? 'Bezig...' : 'Verstuur'}
-        </Button>
-      </form>
+      {/* Input form - Strak design met | > */}
+      <div 
+        className="px-6 py-4"
+        style={{ 
+          backgroundColor: colors.surface,
+        }}
+      >
+        <form onSubmit={handleSubmit} className="flex items-center gap-3">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={placeholder}
+            disabled={isProcessing}
+            className="flex-1 px-4 py-3 rounded text-sm transition-all duration-300 focus:outline-none disabled:opacity-50"
+            style={{
+              backgroundColor: colors.background,
+              color: colors.text.primary,
+              boxShadow: `inset 0 0 0 1.5px ${colors.border}`,
+            }}
+            onFocus={(e) => {
+              e.currentTarget.style.boxShadow = `inset 0 0 0 2px ${colors.accent.primary}`;
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.boxShadow = `inset 0 0 0 1.5px ${colors.border}`;
+            }}
+          />
+          <button
+            type="submit"
+            disabled={isProcessing || !input.trim()}
+            className="flex-shrink-0 w-12 h-12 rounded flex items-center justify-center transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group"
+            style={{
+              backgroundColor: colors.accent.primary,
+              boxShadow: shadows.card,
+            }}
+            onMouseEnter={(e) => {
+              if (!isProcessing && input.trim()) {
+                e.currentTarget.style.backgroundColor = colors.accent.hover;
+                e.currentTarget.style.transform = 'scale(1.05)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = colors.accent.primary;
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
+          >
+            <div className="flex items-center gap-0.5" style={{ color: colors.text.inverse }}>
+              <span className="text-lg font-light">|</span>
+              <Send className="w-5 h-5" style={{ transform: 'translateX(1px)' }} />
+            </div>
+          </button>
+        </form>
+      </div>
     </Card>
   );
 }

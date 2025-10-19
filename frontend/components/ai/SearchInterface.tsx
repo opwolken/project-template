@@ -5,6 +5,8 @@ import { useAsyncAction } from '@/lib/hooks/useAsyncAction';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
+import { colors, shadows } from '@/lib/design-system';
+import { Send, Trash2, Search, ExternalLink, Sparkles } from 'lucide-react';
 
 interface SearchResult {
   title: string;
