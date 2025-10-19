@@ -6,38 +6,33 @@ interface BadgeProps {
   variant?: 'default' | 'success' | 'warning' | 'danger' | 'info' | 'accent';
   size?: 'sm' | 'md';
   className?: string;
+  style?: React.CSSProperties;
 }
 
 const variantStyles = {
   default: {
     backgroundColor: colors.surfaceHover,
     color: colors.text.secondary,
-    border: `1px solid ${colors.border}`,
   },
   accent: {
     backgroundColor: colors.accent.light,
     color: colors.accent.primary,
-    border: `1px solid ${colors.accent.secondary}`,
   },
   success: {
-    backgroundColor: '#F0FDF4',
+    backgroundColor: '#E8F5E9',
     color: colors.success,
-    border: `1px solid #BBF7D0`,
   },
   warning: {
-    backgroundColor: '#FFFBEB',
+    backgroundColor: '#FFF8E1',
     color: colors.warning,
-    border: `1px solid #FED7AA`,
   },
   danger: {
-    backgroundColor: '#FEF2F2',
+    backgroundColor: '#FFEBEE',
     color: colors.error,
-    border: `1px solid #FECACA`,
   },
   info: {
-    backgroundColor: '#EFF6FF',
+    backgroundColor: '#E3F2FD',
     color: colors.info,
-    border: `1px solid #BFDBFE`,
   },
 };
 
@@ -51,6 +46,7 @@ export default function Badge({
   variant = 'default',
   size = 'sm',
   className = '',
+  style,
 }: BadgeProps) {
   return (
     <span
@@ -62,6 +58,7 @@ export default function Badge({
       style={{
         ...variantStyles[variant],
         borderRadius: borderRadius.sm,
+        ...style,
       }}
     >
       {children}

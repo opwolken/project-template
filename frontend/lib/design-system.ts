@@ -4,37 +4,48 @@
  */
 
 export const colors = {
-  // Background & Surfaces
-  background: '#FAFAF9',      // off-white
-  surface: '#FFFFFF',         // pure white voor cards
-  surfaceHover: '#F5F5F4',    // subtle hover state
+  // Background & Surfaces - Warme aardtinten
+  background: '#FAF6F4',      // warm white met roze ondertoon
+  surface: '#FFFFFF',         // pure white voor contrast
+  surfaceHover: '#F2E8E5',    // pale clay hover state
+  surfaceAlt: '#F5EBE8',      // alternatieve surface (blush)
   
-  // Text
+  // Text - Rijke, warme tinten
   text: {
-    primary: '#18181B',       // off-black
-    secondary: '#52525B',     // medium gray
-    tertiary: '#A1A1AA',      // light gray
-    inverse: '#FAFAF9',       // voor dark backgrounds
+    primary: '#2D1410',       // deep brown, bijna zwart
+    secondary: '#5C342E',     // raw umber
+    tertiary: '#9B7B72',      // warm gray-brown
+    inverse: '#FAF6F4',       // voor dark backgrounds
   },
   
-  // Accent - Extra donker, bijna zwart met rode tint
+  // Accent - Red Earth palette (sophisticated)
   accent: {
-    primary: '#1A0A08',       // zeer donkerrood, bijna zwart
-    secondary: '#2C1410',     // iets lichter donkerrood
-    hover: '#3D1E18',         // hover state
-    light: '#FEF2F2',         // very light red voor backgrounds
+    primary: '#4A1F1A',       // oxide red - hoofdaccent
+    secondary: '#5C342E',     // raw umber - secundair
+    hover: '#6B3023',         // rust orange - hover
+    light: '#F2E8E5',         // pale clay - backgrounds
+    lighter: '#F5EBE8',       // blush pink - zeer subtiel
   },
   
-  // Semantic
-  success: '#166534',         // dark green
-  warning: '#92400E',         // amber
-  error: '#991B1B',           // red
-  info: '#1E40AF',            // blue
+  // Stone & Earth tones voor variatie
+  earth: {
+    clay: '#F2E8E5',          // pale clay
+    sand: '#E8DDD6',          // warm sand
+    stone: '#D9D2CE',         // stone gray
+    terracotta: '#8B5A4D',    // warme terracotta
+  },
   
-  // Borders & Dividers
-  border: '#E4E4E7',          // subtle border
-  borderHover: '#D4D4D8',     // hover state
-  divider: '#F4F4F5',         // lighter divider
+  // Semantic - Aangepast aan palette
+  success: '#3D5A3B',         // earthy green
+  warning: '#8B5A2B',         // warm amber
+  error: '#7A2E26',           // deep red
+  info: '#4A5C6B',            // slate blue
+  
+  // Borders & Dividers - Warmer
+  border: '#E8DDD6',          // warm sand border
+  borderHover: '#D9D2CE',     // stone gray hover
+  divider: '#F2E8E5',         // pale clay divider
+  borderAccent: '#C4A99D',    // warme accent border
 } as const;
 
 export const typography = {
@@ -74,24 +85,25 @@ export const typography = {
 } as const;
 
 export const spacing = {
-  xs: '0.5rem',   // 8px
+  xs: '0.5rem',   // 8px - base unit
   sm: '0.75rem',  // 12px
-  md: '1rem',     // 16px
-  lg: '1.5rem',   // 24px
-  xl: '2rem',     // 32px
-  '2xl': '3rem',  // 48px
-  '3xl': '4rem',  // 64px
-  '4xl': '6rem',  // 96px
-  '5xl': '8rem',  // 128px
+  md: '1rem',     // 16px - 2x base
+  lg: '1.5rem',   // 24px - 3x base
+  xl: '2rem',     // 32px - 4x base
+  '2xl': '3rem',  // 48px - 6x base
+  '3xl': '4rem',  // 64px - 8x base
+  '4xl': '6rem',  // 96px - 12x base (luxury)
+  '5xl': '8rem',  // 128px - 16x base (ultra luxury)
+  '6xl': '10rem', // 160px - 20x base
 } as const;
 
 export const borderRadius = {
   none: '0',
-  sm: '0.25rem',   // 4px - subtiel
-  md: '0.5rem',    // 8px - standaard
-  lg: '0.75rem',   // 12px - cards
-  xl: '1rem',      // 16px - modals
-  full: '9999px',  // pills/avatars
+  sm: '0.125rem',  // 2px - zeer subtiel, sophisticated
+  md: '0.25rem',   // 4px - standaard, strak
+  lg: '0.25rem',   // 4px - cards, consequent
+  xl: '0.25rem',   // 4px - modals, consistent
+  full: '9999px',  // pills/avatars (alleen waar nodig)
 } as const;
 
 export const shadows = {
@@ -142,4 +154,17 @@ export const transitions = {
   fast: '150ms cubic-bezier(0.4, 0, 0.2, 1)',
   normal: '300ms cubic-bezier(0.4, 0, 0.2, 1)',
   slow: '500ms cubic-bezier(0.4, 0, 0.2, 1)',
+  smooth: '600ms cubic-bezier(0.65, 0, 0.35, 1)', // Expressievere easing
+} as const;
+
+// Grid system - 8pt base
+export const grid = {
+  baseUnit: 8,
+  columns: 12,
+  gutter: '1.5rem', // 24px - 3x base
+  margin: {
+    mobile: '1rem',  // 16px - 2x base
+    tablet: '2rem',  // 32px - 4x base
+    desktop: '4rem', // 64px - 8x base
+  }
 } as const;

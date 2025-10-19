@@ -23,16 +23,27 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           className={`
             w-full px-4 py-2.5 
-            transition-all duration-200
-            focus:outline-none focus:ring-2 focus:ring-offset-0
+            transition-all duration-300
+            focus:outline-none
             disabled:opacity-50 disabled:cursor-not-allowed
             ${className}
           `}
           style={{
             backgroundColor: colors.surface,
-            border: `1px solid ${error ? colors.error : colors.border}`,
-            borderRadius: borderRadius.md,
+            boxShadow: error ? `inset 0 0 0 2px ${colors.error}` : `inset 0 0 0 1.5px ${colors.border}`,
+            borderRadius: borderRadius.sm,
             color: colors.text.primary,
+          }}
+          onFocus={(e) => {
+            e.currentTarget.style.boxShadow = error 
+              ? `inset 0 0 0 2px ${colors.error}` 
+              : `inset 0 0 0 2px ${colors.accent.primary}`;
+            e.currentTarget.style.backgroundColor = colors.surface;
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.boxShadow = error 
+              ? `inset 0 0 0 2px ${colors.error}` 
+              : `inset 0 0 0 1.5px ${colors.border}`;
           }}
           {...props}
         />

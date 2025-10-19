@@ -8,36 +8,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
 }
 
-const variantStyles = {
-  primary: {
-    backgroundColor: colors.accent.primary,
-    color: colors.text.inverse,
-    ':hover': { backgroundColor: colors.accent.hover },
-  },
-  secondary: {
-    backgroundColor: colors.surface,
-    color: colors.text.primary,
-    border: `1px solid ${colors.border}`,
-    ':hover': { backgroundColor: colors.surfaceHover },
-  },
-  outline: {
-    backgroundColor: 'transparent',
-    color: colors.accent.primary,
-    border: `1px solid ${colors.accent.primary}`,
-    ':hover': { backgroundColor: colors.accent.light },
-  },
-  ghost: {
-    backgroundColor: 'transparent',
-    color: colors.text.secondary,
-    ':hover': { backgroundColor: colors.surfaceHover },
-  },
-  danger: {
-    backgroundColor: colors.error,
-    color: colors.text.inverse,
-    ':hover': { backgroundColor: '#7F1D1D' },
-  },
-};
-
 const sizeClasses = {
   sm: 'px-3 py-1.5 text-sm',
   md: 'px-4 py-2.5 text-base',
@@ -51,10 +21,57 @@ export default function Button({
   fullWidth = false,
   className = '',
   disabled,
+  style,
   ...props
 }: ButtonProps) {
-  const baseStyle = {
-    boxShadow: shadows.card,
+  const getVariantStyle = () => {
+    switch (variant) {
+      case 'primary':
+        return {
+          backgroundColor: colors.accent.primary,
+          color: colors.text.inverse,
+          boxShadow: shadows.card,
+        };
+      case 'secondary':
+        return {
+          backgroundColor: colors.surface,
+          color: colors.text.primary,
+          boxShadow: shadows.card,
+        };
+      case 'outline':
+        return {
+          backgroundColor: 'transparent',
+          color: colors.accent.primary,
+          boxShadow: `inset 0 0 0 1.5px ${colors.accent.primary}`,
+        };
+      case 'ghost':
+        return {
+          backgroundColor: 'transparent',
+          color: colors.text.secondary,
+          boxShadow: 'none',
+        };
+      case 'danger':
+        return {
+          backgroundColor: colors.error,
+          color: colors.text.inverse,
+          boxShadow: shadows.card,
+        };
+    }
+  };
+
+  const getHoverStyle = () => {
+    switch (variant) {
+      case 'primary':
+        return { backgroundColor: colors.accent.hover };
+      case 'secondary':
+        return { backgroundColor: colors.surfaceHover };
+      case 'outline':
+        return { backgroundColor: colors.accent.lighter };
+      case 'ghost':
+        return { backgroundColor: colors.surfaceHover };
+      case 'danger':
+        return { backgroundColor: '#7F1D1D' };
+    }
   };
 
   return (
@@ -62,24 +79,27 @@ export default function Button({
       className={`
         ${sizeClasses[size]}
         ${fullWidth ? 'w-full' : ''}
-        font-medium rounded-lg
-        transition-all duration-200
+        font-medium rounded
+        transition-all duration-300
         disabled:opacity-50 disabled:cursor-not-allowed
         focus:outline-none focus:ring-2 focus:ring-offset-2
         ${className}
       `}
       style={{
-        ...baseStyle,
-        backgroundColor: variant === 'primary' ? colors.accent.primary : 
-                        variant === 'secondary' ? colors.surface :
-                        variant === 'danger' ? colors.error : 'transparent',
-        color: variant === 'primary' || variant === 'danger' ? colors.text.inverse : 
-               variant === 'outline' ? colors.accent.primary :
-               colors.text.primary,
-        border: variant === 'secondary' ? `1px solid ${colors.border}` :
-                variant === 'outline' ? `1px solid ${colors.accent.primary}` : 'none',
+        ...getVariantStyle(),
+        ...style,
       }}
       disabled={disabled}
+      onMouseEnter={(e) => {
+        if (disabled) return;
+        const hoverStyle = getHoverStyle();
+        Object.assign(e.currentTarget.style, hoverStyle);
+      }}
+      onMouseLeave={(e) => {
+        if (disabled) return;
+        const baseStyle = getVariantStyle();
+        Object.assign(e.currentTarget.style, baseStyle);
+      }}
       {...props}
     >
       {children}

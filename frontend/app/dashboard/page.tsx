@@ -7,6 +7,8 @@ import Card from '../../components/ui/Card';
 import Badge from '../../components/ui/Badge';
 import Button from '../../components/ui/Button';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import { colors } from '@/lib/design-system';
+import { LayoutDashboard, Check, User, Shield, Lock, FileText, BarChart3, Users, Settings, Sparkles, Home } from 'lucide-react';
 
 export default function Dashboard() {
   const { isReady, loading, user } = useProtectedRoute();
@@ -20,165 +22,409 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="bg-neutral-50 min-h-screen">
-      <Container size="lg" className="py-12">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-            </div>
-            <div>
-              <h1 className="text-4xl font-bold text-neutral-900">Dashboard</h1>
-              <p className="text-neutral-600">Welkom terug, {user.displayName || user.email}</p>
-            </div>
+    <div style={{ backgroundColor: colors.background, minHeight: '100vh', paddingTop: '64px' }}>
+      {/* Hero Section - Dark */}
+      <section 
+        className="relative overflow-hidden"
+        style={{ 
+          backgroundColor: colors.accent.primary,
+          backgroundImage: `linear-gradient(135deg, ${colors.accent.primary}, ${colors.accent.secondary})`,
+          paddingTop: '8rem',
+          paddingBottom: '8rem',
+        }}
+      >
+        <Container size="lg">
+          <div className="max-w-3xl relative z-10">
+            <Badge 
+              variant="accent" 
+              size="md" 
+              style={{ 
+                backgroundColor: colors.accent.hover,
+                color: colors.text.inverse,
+                border: 'none',
+              }}
+            >
+              <LayoutDashboard className="inline-block w-4 h-4 mr-2" />
+              Beveiligde omgeving
+            </Badge>
+            
+            <h1 
+              className="mt-6 font-bold tracking-tight font-serif leading-tight" 
+              style={{ 
+                color: colors.text.inverse,
+                fontSize: 'clamp(2.5rem, 7vw, 4rem)',
+              }}
+            >
+              Dashboard
+            </h1>
+            
+            <p 
+              className="mt-6 text-lg md:text-xl leading-relaxed" 
+              style={{ 
+                color: colors.accent.lighter,
+                textAlign: 'justify',
+                hyphens: 'auto',
+                maxWidth: '600px',
+              }}
+            >
+              Welkom terug, {user.displayName || user.email}. Je hebt volledige toegang tot alle features 
+              en functionaliteit van het platform.
+            </p>
           </div>
-        </div>
+        </Container>
+      </section>
 
-        {/* Success Alert */}
-        <Card padding="md" className="mb-8 bg-green-50 border-green-200">
-          <div className="flex items-start gap-3">
-            <div className="bg-green-100 rounded-lg p-2">
-              <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+      {/* Success Alert */}
+      <section style={{ backgroundColor: colors.background, paddingTop: '6rem', paddingBottom: '3rem' }}>
+        <Container size="lg">
+          <Card 
+            padding="lg" 
+            style={{ 
+              backgroundColor: colors.accent.lighter,
+              borderColor: colors.accent.light,
+            }}
+          >
+            <div className="flex items-start gap-4">
+              <div 
+                className="rounded-lg p-3"
+                style={{ backgroundColor: colors.accent.light }}
+              >
+                <Check className="w-6 h-6" style={{ color: colors.accent.primary }} />
+              </div>
+              <div className="flex-1">
+                <p 
+                  className="font-semibold mb-2 font-serif text-lg" 
+                  style={{ color: colors.text.primary }}
+                >
+                  Je bent geautoriseerd
+                </p>
+                <p 
+                  className="text-sm leading-relaxed" 
+                  style={{ 
+                    color: colors.text.secondary,
+                    textAlign: 'justify',
+                    hyphens: 'auto',
+                  }}
+                >
+                  Je hebt toegang tot alle beveiligde pagina&apos;s. Je e-mailadres is goedgekeurd 
+                  door de beheerder en je account heeft volledige rechten om alle functionaliteit te gebruiken.
+                </p>
+              </div>
             </div>
-            <div className="flex-1">
-              <p className="font-semibold text-green-900 mb-1">✓ Je bent geautoriseerd!</p>
-              <p className="text-sm text-green-700">
-                Je hebt toegang tot alle beveiligde pagina&apos;s. Je e-mailadres is goedgekeurd door de beheerder.
+          </Card>
+        </Container>
+      </section>
+
+      {/* Stats Grid */}
+      <section style={{ backgroundColor: colors.background, paddingBottom: '6rem' }}>
+        <Container size="lg">
+          <div className="grid md:grid-cols-3 gap-6">
+            <Card 
+              padding="lg" 
+              hover
+              style={{
+                transition: 'all 600ms cubic-bezier(0.65, 0, 0.35, 1)',
+              }}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <Badge variant="info">Account</Badge>
+                <div 
+                  className="rounded-lg p-2"
+                  style={{ backgroundColor: colors.accent.lighter }}
+                >
+                  <User className="w-6 h-6" style={{ color: colors.accent.primary }} />
+                </div>
+              </div>
+              <p className="text-sm mb-2" style={{ color: colors.text.secondary }}>Email</p>
+              <p 
+                className="text-lg font-semibold font-serif truncate" 
+                style={{ color: colors.text.primary }}
+              >
+                {user.email}
               </p>
-            </div>
+            </Card>
+
+            <Card 
+              padding="lg" 
+              hover
+              style={{
+                transition: 'all 600ms cubic-bezier(0.65, 0, 0.35, 1)',
+              }}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <Badge variant="success">Status</Badge>
+                <div 
+                  className="rounded-lg p-2"
+                  style={{ backgroundColor: colors.accent.lighter }}
+                >
+                  <Shield className="w-6 h-6" style={{ color: colors.accent.primary }} />
+                </div>
+              </div>
+              <p className="text-sm mb-2" style={{ color: colors.text.secondary }}>Toegang</p>
+              <p 
+                className="text-lg font-semibold font-serif" 
+                style={{ color: colors.text.primary }}
+              >
+                Geautoriseerd
+              </p>
+            </Card>
+
+            <Card 
+              padding="lg" 
+              hover
+              style={{
+                transition: 'all 600ms cubic-bezier(0.65, 0, 0.35, 1)',
+              }}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <Badge variant="default">Rol</Badge>
+                <div 
+                  className="rounded-lg p-2"
+                  style={{ backgroundColor: colors.accent.lighter }}
+                >
+                  <Lock className="w-6 h-6" style={{ color: colors.accent.primary }} />
+                </div>
+              </div>
+              <p className="text-sm mb-2" style={{ color: colors.text.secondary }}>Rechten</p>
+              <p 
+                className="text-lg font-semibold font-serif" 
+                style={{ color: colors.text.primary }}
+              >
+                Volledige toegang
+              </p>
+            </Card>
           </div>
-        </Card>
+        </Container>
+      </section>
 
-        {/* Stats Grid */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <Card padding="lg" hover>
-            <div className="flex items-center justify-between mb-4">
-              <Badge variant="info">Account</Badge>
-              <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              </div>
-            </div>
-            <p className="text-sm text-neutral-600 mb-1">Email</p>
-            <p className="text-lg font-semibold text-neutral-900 truncate">{user.email}</p>
-          </Card>
-
-          <Card padding="lg" hover>
-            <div className="flex items-center justify-between mb-4">
-              <Badge variant="success">Status</Badge>
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-            </div>
-            <p className="text-sm text-neutral-600 mb-1">Toegang</p>
-            <p className="text-lg font-semibold text-neutral-900">Geautoriseerd</p>
-          </Card>
-
-          <Card padding="lg" hover>
-            <div className="flex items-center justify-between mb-4">
-              <Badge variant="default">Rol</Badge>
-              <div className="w-10 h-10 bg-neutral-100 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-              </div>
-            </div>
-            <p className="text-sm text-neutral-600 mb-1">Rechten</p>
-            <p className="text-lg font-semibold text-neutral-900">Volledige toegang</p>
-          </Card>
-        </div>
-
-        {/* Features Section */}
-        <Card padding="lg" className="mb-8">
-          <h2 className="text-2xl font-bold text-neutral-900 mb-6">Beschikbare functies</h2>
-          
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="p-4 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition-colors">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-neutral-900 mb-1">Content beheren</h3>
-                  <p className="text-sm text-neutral-600">Maak en bewerk je content met volledige controle</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-4 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition-colors">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-neutral-900 mb-1">Statistieken bekijken</h3>
-                  <p className="text-sm text-neutral-600">Krijg inzicht in je data en prestaties</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-4 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition-colors">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-neutral-900 mb-1">Team samenwerken</h3>
-                  <p className="text-sm text-neutral-600">Werk samen met je team aan projecten</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-4 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition-colors">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-neutral-900 mb-1">Instellingen beheren</h3>
-                  <p className="text-sm text-neutral-600">Pas je account en voorkeuren aan</p>
-                </div>
-              </div>
-            </div>
+      {/* Features Section - Dark Background */}
+      <section 
+        className="relative overflow-hidden"
+        style={{ 
+          backgroundColor: colors.accent.secondary,
+          paddingTop: '8rem',
+          paddingBottom: '8rem',
+        }}
+      >
+        {/* Background Image with Duotone */}
+        <div 
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: 'url(https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&auto=format&fit=crop)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            mixBlendMode: 'multiply',
+          }}
+        />
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundColor: colors.accent.primary,
+            mixBlendMode: 'multiply',
+            opacity: 0.7,
+          }}
+        />
+        
+        <Container size="lg">
+          <div className="max-w-2xl mb-12 relative z-10">
+            <h2 
+              className="font-bold font-serif" 
+              style={{ 
+                color: colors.text.inverse,
+                fontSize: 'clamp(2rem, 5vw, 3rem)',
+              }}
+            >
+              Beschikbare functies
+            </h2>
+            <p 
+              className="mt-6 text-base md:text-lg leading-relaxed" 
+              style={{ 
+                color: colors.accent.lighter,
+                textAlign: 'justify',
+                hyphens: 'auto',
+              }}
+            >
+              Als geautoriseerde gebruiker heb je toegang tot alle functionaliteit. 
+              Van content beheer tot statistieken en team samenwerking.
+            </p>
           </div>
-        </Card>
 
-        {/* Quick Actions */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/ai">
-            <Button variant="primary" size="lg">
-              🤖 AI Features →
-            </Button>
-          </Link>
-          <Link href="/admin">
-            <Button variant="secondary" size="lg">
-              Admin Panel
-            </Button>
-          </Link>
-          <Link href="/">
-            <Button variant="outline" size="lg">
-              ← Terug naar Home
-            </Button>
-          </Link>
-        </div>
-      </Container>
+          <div className="grid md:grid-cols-2 gap-6 relative z-10">
+            <Card 
+              hover
+              padding="lg"
+              style={{
+                transition: 'all 600ms cubic-bezier(0.65, 0, 0.35, 1)',
+              }}
+            >
+              <div className="flex items-start gap-4">
+                <div 
+                  className="rounded-lg p-3 flex-shrink-0"
+                  style={{ backgroundColor: colors.accent.lighter }}
+                >
+                  <FileText className="w-6 h-6" style={{ color: colors.accent.primary }} />
+                </div>
+                <div>
+                  <h3 className="font-semibold font-serif text-lg mb-2" style={{ color: colors.text.primary }}>
+                    Content beheren
+                  </h3>
+                  <p 
+                    className="text-sm leading-relaxed" 
+                    style={{ 
+                      color: colors.text.secondary,
+                      textAlign: 'justify',
+                      hyphens: 'auto',
+                    }}
+                  >
+                    Maak en bewerk je content met volledige controle. Gebruik de intuïtieve editor 
+                    om snel en efficiënt te werken.
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            <Card 
+              hover
+              padding="lg"
+              style={{
+                transition: 'all 600ms cubic-bezier(0.65, 0, 0.35, 1)',
+              }}
+            >
+              <div className="flex items-start gap-4">
+                <div 
+                  className="rounded-lg p-3 flex-shrink-0"
+                  style={{ backgroundColor: colors.accent.lighter }}
+                >
+                  <BarChart3 className="w-6 h-6" style={{ color: colors.accent.primary }} />
+                </div>
+                <div>
+                  <h3 className="font-semibold font-serif text-lg mb-2" style={{ color: colors.text.primary }}>
+                    Statistieken bekijken
+                  </h3>
+                  <p 
+                    className="text-sm leading-relaxed" 
+                    style={{ 
+                      color: colors.text.secondary,
+                      textAlign: 'justify',
+                      hyphens: 'auto',
+                    }}
+                  >
+                    Krijg inzicht in je data en prestaties met uitgebreide rapportages 
+                    en real-time statistieken.
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            <Card 
+              hover
+              padding="lg"
+              style={{
+                transition: 'all 600ms cubic-bezier(0.65, 0, 0.35, 1)',
+              }}
+            >
+              <div className="flex items-start gap-4">
+                <div 
+                  className="rounded-lg p-3 flex-shrink-0"
+                  style={{ backgroundColor: colors.accent.lighter }}
+                >
+                  <Users className="w-6 h-6" style={{ color: colors.accent.primary }} />
+                </div>
+                <div>
+                  <h3 className="font-semibold font-serif text-lg mb-2" style={{ color: colors.text.primary }}>
+                    Team samenwerken
+                  </h3>
+                  <p 
+                    className="text-sm leading-relaxed" 
+                    style={{ 
+                      color: colors.text.secondary,
+                      textAlign: 'justify',
+                      hyphens: 'auto',
+                    }}
+                  >
+                    Werk samen met je team aan projecten. Deel documenten en communiceer 
+                    efficiënt binnen het platform.
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            <Card 
+              hover
+              padding="lg"
+              style={{
+                transition: 'all 600ms cubic-bezier(0.65, 0, 0.35, 1)',
+              }}
+            >
+              <div className="flex items-start gap-4">
+                <div 
+                  className="rounded-lg p-3 flex-shrink-0"
+                  style={{ backgroundColor: colors.accent.lighter }}
+                >
+                  <Settings className="w-6 h-6" style={{ color: colors.accent.primary }} />
+                </div>
+                <div>
+                  <h3 className="font-semibold font-serif text-lg mb-2" style={{ color: colors.text.primary }}>
+                    Instellingen beheren
+                  </h3>
+                  <p 
+                    className="text-sm leading-relaxed" 
+                    style={{ 
+                      color: colors.text.secondary,
+                      textAlign: 'justify',
+                      hyphens: 'auto',
+                    }}
+                  >
+                    Pas je account en voorkeuren aan. Configureer notificaties, privacy 
+                    en andere persoonlijke instellingen.
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </Container>
+      </section>
+
+      {/* Quick Actions */}
+      <section style={{ backgroundColor: colors.background, paddingTop: '6rem', paddingBottom: '6rem' }}>
+        <Container size="lg">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/ai">
+              <Button 
+                variant="primary" 
+                size="lg"
+                style={{
+                  transition: 'all 600ms cubic-bezier(0.65, 0, 0.35, 1)',
+                }}
+              >
+                <Sparkles className="inline-block w-5 h-5 mr-2" /> AI Features
+              </Button>
+            </Link>
+            <Link href="/admin">
+              <Button 
+                variant="secondary" 
+                size="lg"
+                style={{
+                  transition: 'all 600ms cubic-bezier(0.65, 0, 0.35, 1)',
+                }}
+              >
+                <Shield className="inline-block w-5 h-5 mr-2" /> Admin Panel
+              </Button>
+            </Link>
+            <Link href="/">
+              <Button 
+                variant="outline" 
+                size="lg"
+                style={{
+                  transition: 'all 600ms cubic-bezier(0.65, 0, 0.35, 1)',
+                }}
+              >
+                <Home className="inline-block w-5 h-5 mr-2" /> Terug naar Home
+              </Button>
+            </Link>
+          </div>
+        </Container>
+      </section>
     </div>
   );
 }

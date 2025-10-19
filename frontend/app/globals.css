@@ -1,33 +1,42 @@
 @import "tailwindcss";
 
 :root {
-  /* Backgrounds */
-  --background: #FAFAF9;
+  /* Backgrounds - Warme aardtinten */
+  --background: #FAF6F4;
   --surface: #FFFFFF;
-  --surface-hover: #F5F5F4;
+  --surface-hover: #F2E8E5;
+  --surface-alt: #F5EBE8;
   
-  /* Text colors */
-  --text-primary: #18181B;
-  --text-secondary: #52525B;
-  --text-tertiary: #A1A1AA;
-  --text-inverse: #FAFAF9;
+  /* Text colors - Rijke bruintinten */
+  --text-primary: #2D1410;
+  --text-secondary: #5C342E;
+  --text-tertiary: #9B7B72;
+  --text-inverse: #FAF6F4;
   
-  /* Accent - extra donker */
-  --accent-primary: #1A0A08;
-  --accent-secondary: #2C1410;
-  --accent-hover: #3D1E18;
-  --accent-light: #FEF2F2;
+  /* Accent - Red Earth palette */
+  --accent-primary: #4A1F1A;
+  --accent-secondary: #5C342E;
+  --accent-hover: #6B3023;
+  --accent-light: #F2E8E5;
+  --accent-lighter: #F5EBE8;
   
-  /* Semantic */
-  --success: #166534;
-  --warning: #92400E;
-  --error: #991B1B;
-  --info: #1E40AF;
+  /* Earth tones */
+  --earth-clay: #F2E8E5;
+  --earth-sand: #E8DDD6;
+  --earth-stone: #D9D2CE;
+  --earth-terracotta: #8B5A4D;
   
-  /* Borders */
-  --border: #E4E4E7;
-  --border-hover: #D4D4D8;
-  --divider: #F4F4F5;
+  /* Semantic - Aangepast aan palette */
+  --success: #3D5A3B;
+  --warning: #8B5A2B;
+  --error: #7A2E26;
+  --info: #4A5C6B;
+  
+  /* Borders - Warmer */
+  --border: #E8DDD6;
+  --border-hover: #D9D2CE;
+  --divider: #F2E8E5;
+  --border-accent: #C4A99D;
 }
 
 @theme inline {
@@ -70,6 +79,22 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
 }
 
+/* Text formatting utilities */
+.text-justify {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+}
+
+p {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  word-break: break-word;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
@@ -98,6 +123,30 @@ h1, h2, h3, h4, h5, h6 {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Fade in up animation for page elements */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide in animation for toasts */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 

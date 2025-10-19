@@ -6,6 +6,7 @@ interface CardProps {
   className?: string;
   hover?: boolean;
   padding?: 'none' | 'sm' | 'md' | 'lg';
+  style?: React.CSSProperties;
 }
 
 const paddingMap = {
@@ -20,6 +21,7 @@ export default function Card({
   className = '',
   hover = false,
   padding = 'md',
+  style,
 }: CardProps) {
   return (
     <div
@@ -30,16 +32,22 @@ export default function Card({
       `}
       style={{
         backgroundColor: colors.surface,
-        borderRadius: borderRadius.lg,
-        border: `1px solid ${colors.border}`,
+        borderRadius: borderRadius.sm,
         padding: paddingMap[padding],
         boxShadow: shadows.card,
-        ...(hover && {
-          ':hover': {
-            boxShadow: shadows.soft,
-            borderColor: colors.borderHover,
-          }
-        })
+        ...style,
+      }}
+      onMouseEnter={(e) => {
+        if (hover) {
+          e.currentTarget.style.boxShadow = shadows.soft;
+          e.currentTarget.style.transform = 'translateY(-2px)';
+        }
+      }}
+      onMouseLeave={(e) => {
+        if (hover) {
+          e.currentTarget.style.boxShadow = shadows.card;
+          e.currentTarget.style.transform = 'translateY(0)';
+        }
       }}
     >
       {children}
