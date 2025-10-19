@@ -1,13 +1,13 @@
 'use client';
 
-import { useAuth } from '../../lib/AuthContext';
+import { useAuth } from '@/lib/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Container from '../../components/layout/Container';
-import Card from '../../components/ui/Card';
-import Button from '../../components/ui/Button';
-import Badge from '../../components/ui/Badge';
+import Container from '@/components/layout/Container';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import Badge from '@/components/ui/Badge';
 
 export default function Unauthorized() {
   const { user, loading } = useAuth();

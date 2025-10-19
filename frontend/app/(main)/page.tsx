@@ -1,17 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { useAuth } from '../lib/AuthContext';
-import { useToast } from '../lib/ToastContext';
-import { useAsyncAction } from '../lib/hooks/useAsyncAction';
+import { useAuth } from '@/lib/AuthContext';
+import { useToast } from '@/lib/ToastContext';
+import { useAsyncAction } from '@/lib/hooks/useAsyncAction';
 import Link from 'next/link';
 import { Rocket, Shield, Zap, Palette, ArrowRight, Check, X, AlertTriangle, Info, Hand } from 'lucide-react';
-import Container from '../components/layout/Container';
-import Card from '../components/ui/Card';
-import Button from '../components/ui/Button';
-import Input from '../components/ui/Input';
-import Badge from '../components/ui/Badge';
-import { colors } from '../lib/design-system';
+import Container from '@/components/layout/Container';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import Badge from '@/components/ui/Badge';
+import { colors } from '@/lib/design-system';
 
 export default function Home() {
   const [message, setMessage] = useState('');
@@ -489,7 +489,7 @@ export default function Home() {
               >
                 Krachtige API gebouwd met Python en Firebase Functions voor serverless computing. 
                 De backend is geoptimaliseerd voor snelheid en schaalbaarheid, met ondersteuning 
-                voor Firestore, externe API's en machine learning integraties.
+                voor Firestore, externe API&apos;s en machine learning integraties.
               </p>
             </Card>
 

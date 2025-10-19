@@ -1,12 +1,12 @@
 'use client';
 
-import { useProtectedRoute } from '../../lib/hooks/useProtectedRoute';
+import { useProtectedRoute } from '@/lib/hooks/useProtectedRoute';
 import Link from 'next/link';
-import Container from '../../components/layout/Container';
-import Card from '../../components/ui/Card';
-import Badge from '../../components/ui/Badge';
-import Button from '../../components/ui/Button';
-import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import Container from '@/components/layout/Container';
+import Card from '@/components/ui/Card';
+import Badge from '@/components/ui/Badge';
+import Button from '@/components/ui/Button';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { colors } from '@/lib/design-system';
 import { LayoutDashboard, Check, User, Shield, Lock, FileText, BarChart3, Users, Settings, Sparkles, Home } from 'lucide-react';
 

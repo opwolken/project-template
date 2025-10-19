@@ -3,8 +3,6 @@ import { Inter, Crimson_Pro, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "../lib/AuthContext";
 import { ToastProvider } from "../lib/ToastContext";
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
 import ToastContainer from "../components/ui/Toast";
 
 const inter = Inter({
@@ -42,13 +40,7 @@ export default function RootLayout({
       >
         <ToastProvider>
           <AuthProvider>
-            <div className="flex flex-col min-h-screen">
-              <Header />
-              <main className="flex-1">
-                {children}
-              </main>
-              <Footer />
-            </div>
+            {children}
             <ToastContainer />
           </AuthProvider>
         </ToastProvider>

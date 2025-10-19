@@ -1,18 +1,18 @@
 'use client';
 
-import { useProtectedRoute } from '../../lib/hooks/useProtectedRoute';
-import { useAsyncAction } from '../../lib/hooks/useAsyncAction';
-import { useToast } from '../../lib/ToastContext';
+import { useProtectedRoute } from '@/lib/hooks/useProtectedRoute';
+import { useAsyncAction } from '@/lib/hooks/useAsyncAction';
+import { useToast } from '@/lib/ToastContext';
 import { useEffect, useState } from 'react';
 import { collection, getDocs, doc, setDoc, deleteDoc } from 'firebase/firestore';
-import { db } from '../../lib/firebase';
+import { db } from '@/lib/firebase';
 import Link from 'next/link';
-import Container from '../../components/layout/Container';
-import Card from '../../components/ui/Card';
-import Button from '../../components/ui/Button';
-import Input from '../../components/ui/Input';
-import Badge from '../../components/ui/Badge';
-import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import Container from '@/components/layout/Container';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import Badge from '@/components/ui/Badge';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { colors } from '@/lib/design-system';
 import { Shield, UserPlus, Users, Check, Trash2, Info, ArrowLeft, Home } from 'lucide-react';
 

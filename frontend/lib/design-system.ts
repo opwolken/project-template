@@ -48,6 +48,45 @@ export const colors = {
   borderAccent: '#C4A99D',    // warme accent border
 } as const;
 
+// Recipe-specific colors
+export const recipeColors = {
+  // Cuisine types - Earthy, sophisticated
+  cuisine: {
+    italiaans: '#8B5A4D',      // Terracotta
+    grieks: '#4A5C6B',         // Mediterranean slate blue
+    chinees: '#7A2E26',        // Deep red
+    frans: '#6B5B4D',          // Warm stone
+    amerikaans: '#8B5A2B',     // Amber
+    mediterraans: '#5B7A72',   // Sage green
+    spaans: '#A0522D',         // Sienna
+    mexicaans: '#8B4513',      // Saddle brown
+    indonesisch: '#704214',    // Dark earth
+    marokkaans: '#B8860B',     // Dark goldenrod
+    nederlands: '#9B7B72',     // Warm gray
+    overig: '#5C342E',         // Raw umber
+  },
+  
+  // Meal types - Consistent with palette
+  mealType: {
+    hoofdgerecht: '#4A1F1A',   // Oxide red
+    voorgerecht: '#6B3023',    // Rust orange
+    bijgerecht: '#8B5A4D',     // Terracotta
+    dessert: '#A0522D',        // Sienna
+    tussendoor: '#8B5A2B',     // Amber
+    soep: '#5B7A72',           // Sage green
+    salade: '#3D5A3B',         // Earthy green
+    gebak: '#B8860B',          // Dark goldenrod
+  },
+  
+  // Dietary badges
+  dietary: {
+    vegetarisch: '#3D5A3B',    // Earthy green
+    vegan: '#2D4A2B',          // Deep green
+    glutenvrij: '#8B5A2B',     // Amber
+    lactosevrij: '#4A5C6B',    // Slate blue
+  },
+} as const;
+
 export const typography = {
   // Font families
   sans: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
