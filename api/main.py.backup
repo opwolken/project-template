@@ -1,8 +1,6 @@
 """
 Main entry point voor Firebase Functions API
 Clean, minimale setup - routing gebeurt in lib/router.py
-
-DRY Principe: Alle logic zit in routes/, utilities in lib/
 """
 from firebase_functions import https_fn, options
 from firebase_admin import initialize_app
@@ -23,8 +21,5 @@ def api(req: https_fn.Request) -> https_fn.Response:
     """
     Main API entry point for all /api/** routes
     Routes naar specifieke handlers via router
-    
-    Zie lib/router.py voor routing logic
-    Zie routes/ voor endpoint handlers
     """
     return route_request(req)

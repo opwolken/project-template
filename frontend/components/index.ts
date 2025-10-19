@@ -8,12 +8,20 @@ export { default as Button } from './ui/Button';
 export { default as Card } from './ui/Card';
 export { default as Input } from './ui/Input';
 export { default as Badge } from './ui/Badge';
+export { default as LoadingSpinner } from './ui/LoadingSpinner';
 export { default as ToastContainer } from './ui/Toast';
 
 // Feature Components
 export { default as LoginButton } from './LoginButton';
-export { default as RealtimeExample } from './RealtimeExample';
+
+// AI Components
+export { default as ChatInterface } from './ai/ChatInterface';
+export { default as SearchInterface } from './ai/SearchInterface';
 
 // Context Exports
 export { useToast, ToastProvider } from '../lib/ToastContext';
 export { useAuth, AuthProvider } from '../lib/AuthContext';
+
+// Hook Exports
+export { useProtectedRoute } from '../lib/hooks/useProtectedRoute';
+export { useAsyncAction } from '../lib/hooks/useAsyncAction';

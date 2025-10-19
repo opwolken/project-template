@@ -9,6 +9,7 @@ import { colors, shadows } from '@/lib/design-system';
 const navigation = [
   { name: 'Home', href: '/' },
   { name: 'Dashboard', href: '/dashboard', protected: true },
+  { name: 'AI Features', href: '/ai', protected: true },
   { name: 'Admin', href: '/admin', protected: true },
 ];
 

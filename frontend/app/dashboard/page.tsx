@@ -1,45 +1,21 @@
 'use client';
 
-import { useAuth } from '../../lib/AuthContext';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useProtectedRoute } from '../../lib/hooks/useProtectedRoute';
 import Link from 'next/link';
 import Container from '../../components/layout/Container';
 import Card from '../../components/ui/Card';
 import Badge from '../../components/ui/Badge';
 import Button from '../../components/ui/Button';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 
 export default function Dashboard() {
-  const { user, isAuthorized, loading } = useAuth();
-  const router = useRouter();
-  const [mounted, setMounted] = useState(false);
+  const { isReady, loading, user } = useProtectedRoute();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!loading && mounted) {
-      if (!user) {
-        router.push('/');
-      } else if (!isAuthorized) {
-        router.push('/unauthorized');
-      }
-    }
-  }, [user, isAuthorized, loading, router, mounted]);
-
-  if (loading || !mounted) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-900 mx-auto"></div>
-          <p className="mt-4 text-neutral-600">Laden...</p>
-        </div>
-      </div>
-    );
+  if (loading) {
+    return <LoadingSpinner fullScreen />;
   }
 
-  if (!user || !isAuthorized) {
+  if (!isReady || !user) {
     return null;
   }
 
@@ -186,9 +162,14 @@ export default function Dashboard() {
 
         {/* Quick Actions */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/admin">
+          <Link href="/ai">
             <Button variant="primary" size="lg">
-              Admin Panel →
+              🤖 AI Features →
+            </Button>
+          </Link>
+          <Link href="/admin">
+            <Button variant="secondary" size="lg">
+              Admin Panel
             </Button>
           </Link>
           <Link href="/">

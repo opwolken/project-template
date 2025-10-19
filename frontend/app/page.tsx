@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useAuth } from '../lib/AuthContext';
 import { useToast } from '../lib/ToastContext';
+import { useAsyncAction } from '../lib/hooks/useAsyncAction';
 import Link from 'next/link';
 import Container from '../components/layout/Container';
 import Card from '../components/ui/Card';
@@ -12,44 +13,48 @@ import Badge from '../components/ui/Badge';
 
 export default function Home() {
   const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const { user, isAuthorized } = useAuth();
   const { success, error, warning, info } = useToast();
+  const { execute: executeHello, loading: helloLoading } = useAsyncAction();
+  const { execute: executeHealth, loading: healthLoading } = useAsyncAction();
+
+  const loading = helloLoading || healthLoading;
 
   const handleHello = async () => {
-    setLoading(true);
     setMessage('');
     
-    try {
-      const response = await fetch(`/api/hello?name=${encodeURIComponent(name || 'World')}`);
-      const data = await response.json();
-      setMessage(data.message || JSON.stringify(data));
-      success('API Call Success', 'Hello endpoint bereikt!');
-    } catch (err) {
-      const errorMsg = `Error: ${err}`;
-      setMessage(errorMsg);
-      error('API Error', 'Er is iets misgegaan bij het aanroepen van de API');
-    } finally {
-      setLoading(false);
+    const result = await executeHello(
+      async () => {
+        const response = await fetch(`/api/hello?name=${encodeURIComponent(name || 'World')}`);
+        return response.json();
+      },
+      {
+        successMessage: 'API Call Success',
+        successDescription: 'Hello endpoint bereikt!',
+        errorMessage: 'API Error',
+        errorDescription: 'Er is iets misgegaan bij het aanroepen van de API',
+      }
+    );
+    
+    if (result) {
+      setMessage(result.message || JSON.stringify(result));
     }
   };
 
   const handleHealth = async () => {
-    setLoading(true);
     setMessage('');
     
-    try {
-      const response = await fetch('/api/health');
-      const data = await response.json();
-      setMessage(`Status: ${data.status} - ${data.message}`);
-      info('Health Check', `Status: ${data.status}`);
-    } catch (err) {
-      const errorMsg = `Error: ${err}`;
-      setMessage(errorMsg);
-      error('Health Check Failed', 'Kon de server status niet ophalen');
-    } finally {
-      setLoading(false);
+    const result = await executeHealth(
+      async () => {
+        const response = await fetch('/api/health');
+        return response.json();
+      }
+    );
+    
+    if (result) {
+      setMessage(`Status: ${result.status} - ${result.message}`);
+      info('Health Check', `Status: ${result.status}`);
     }
   };
 

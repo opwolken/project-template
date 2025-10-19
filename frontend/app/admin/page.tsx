@@ -1,8 +1,8 @@
 'use client';
 
-import { useAuth } from '../../lib/AuthContext';
+import { useProtectedRoute } from '../../lib/hooks/useProtectedRoute';
+import { useAsyncAction } from '../../lib/hooks/useAsyncAction';
 import { useToast } from '../../lib/ToastContext';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { collection, getDocs, doc, setDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
@@ -12,6 +12,7 @@ import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Badge from '../../components/ui/Badge';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 
 interface AuthorizedUser {
   email: string;
@@ -20,28 +21,20 @@ interface AuthorizedUser {
 }
 
 export default function Admin() {
-  const { user, isAuthorized, loading } = useAuth();
-  const { success, error, warning } = useToast();
-  const router = useRouter();
-  const [mounted, setMounted] = useState(false);
+  const { isReady, loading, user } = useProtectedRoute();
+  const { warning } = useToast();
+  const { execute: executeAdd, loading: addLoading } = useAsyncAction();
+  const { execute: executeRemove, loading: removeLoading } = useAsyncAction();
   const [users, setUsers] = useState<AuthorizedUser[]>([]);
   const [newEmail, setNewEmail] = useState('');
-  const [actionLoading, setActionLoading] = useState(false);
+
+  const actionLoading = addLoading || removeLoading;
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!loading && mounted) {
-      if (!user || !isAuthorized) {
-        router.push('/');
-      } else {
-        loadUsers();
-      }
+    if (isReady) {
+      loadUsers();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, isAuthorized, loading, router, mounted]);
+  }, [isReady]);
 
   const loadUsers = async () => {
     try {
@@ -53,7 +46,6 @@ export default function Admin() {
       setUsers(usersList.sort((a, b) => a.email.localeCompare(b.email)));
     } catch (err) {
       console.error('Error loading users:', err);
-      error('Fout bij laden', 'Kon gebruikers niet ophalen');
     }
   };
 
@@ -64,21 +56,22 @@ export default function Admin() {
       return;
     }
 
-    setActionLoading(true);
-    try {
-      await setDoc(doc(db, 'authorized_users', newEmail.toLowerCase()), {
-        approved: true,
-        addedAt: new Date().toISOString(),
-      });
-      setNewEmail('');
-      await loadUsers();
-      success('Gebruiker toegevoegd', `${newEmail} heeft nu toegang`);
-    } catch (err) {
-      console.error('Error adding user:', err);
-      error('Fout bij toevoegen', 'Kon gebruiker niet toevoegen');
-    } finally {
-      setActionLoading(false);
-    }
+    await executeAdd(
+      async () => {
+        await setDoc(doc(db, 'authorized_users', newEmail.toLowerCase()), {
+          approved: true,
+          addedAt: new Date().toISOString(),
+        });
+        setNewEmail('');
+        await loadUsers();
+      },
+      {
+        successMessage: 'Gebruiker toegevoegd',
+        successDescription: `${newEmail} heeft nu toegang`,
+        errorMessage: 'Fout bij toevoegen',
+        errorDescription: 'Kon gebruiker niet toevoegen',
+      }
+    );
   };
 
   const removeUser = async (email: string) => {
@@ -86,31 +79,25 @@ export default function Admin() {
       return;
     }
 
-    setActionLoading(true);
-    try {
-      await deleteDoc(doc(db, 'authorized_users', email));
-      await loadUsers();
-      success('Gebruiker verwijderd', `${email} heeft geen toegang meer`);
-    } catch (err) {
-      console.error('Error removing user:', err);
-      error('Fout bij verwijderen', 'Kon gebruiker niet verwijderen');
-    } finally {
-      setActionLoading(false);
-    }
+    await executeRemove(
+      async () => {
+        await deleteDoc(doc(db, 'authorized_users', email));
+        await loadUsers();
+      },
+      {
+        successMessage: 'Gebruiker verwijderd',
+        successDescription: `${email} heeft geen toegang meer`,
+        errorMessage: 'Fout bij verwijderen',
+        errorDescription: 'Kon gebruiker niet verwijderen',
+      }
+    );
   };
 
-  if (loading || !mounted) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-900 mx-auto"></div>
-          <p className="mt-4 text-neutral-600">Laden...</p>
-        </div>
-      </div>
-    );
+  if (loading) {
+    return <LoadingSpinner fullScreen />;
   }
 
-  if (!user || !isAuthorized) {
+  if (!isReady || !user) {
     return null;
   }
 

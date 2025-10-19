@@ -100,13 +100,21 @@ frontend/
 ├── lib/
 │   ├── design-system.ts   # Design tokens (CHECK EERST!)
 │   ├── firebase.ts        # Firebase config
+│   ├── hooks/             # Custom React hooks
 │   └── [feature]Context.tsx # Contexts
 
 api/
-├── main.py                # Firebase Functions endpoints
-├── lib/                   # Utilities & clients
-│   ├── gemini_client.py   # Gemini AI (chat + image)
-│   └── tavily_client.py   # Tavily search
+├── main.py                # Entry point (minimaal - alleen router call)
+├── routes/                # Route handlers (DRY - gescheiden per feature)
+│   ├── basic_routes.py    # Health, hello, root
+│   ├── ai_routes.py       # Gemini AI endpoints
+│   ├── search_routes.py   # Tavily search
+│   └── firestore_routes.py # Firestore CRUD
+├── lib/                   # Shared utilities & clients
+│   ├── router.py          # Main routing logic
+│   ├── utils.py           # Shared helpers (responses, validation, clients)
+│   ├── gemini_client.py   # Gemini AI client
+│   └── tavily_client.py   # Tavily search client
 └── requirements.txt
 ```
 

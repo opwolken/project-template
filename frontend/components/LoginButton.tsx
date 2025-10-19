@@ -1,40 +1,39 @@
 'use client';
 
 import { useAuth } from '../lib/AuthContext';
-import { useToast } from '../lib/ToastContext';
-import { useState } from 'react';
+import { useAsyncAction } from '../lib/hooks/useAsyncAction';
 import Button from './ui/Button';
 import Badge from './ui/Badge';
 
 export default function LoginButton() {
   const { user, isAuthorized, signInWithGoogle, signOut } = useAuth();
-  const { success, error } = useToast();
-  const [loading, setLoading] = useState(false);
+  const { execute: executeSignIn, loading: signInLoading } = useAsyncAction();
+  const { execute: executeSignOut, loading: signOutLoading } = useAsyncAction();
+
+  const loading = signInLoading || signOutLoading;
 
   const handleSignIn = async () => {
-    setLoading(true);
-    try {
-      await signInWithGoogle();
-      success('Succesvol ingelogd', 'Welkom terug!');
-    } catch (err) {
-      console.error('Login error:', err);
-      error('Inloggen mislukt', 'Er is iets misgegaan bij het inloggen.');
-    } finally {
-      setLoading(false);
-    }
+    await executeSignIn(
+      async () => signInWithGoogle(),
+      {
+        successMessage: 'Succesvol ingelogd',
+        successDescription: 'Welkom terug!',
+        errorMessage: 'Inloggen mislukt',
+        errorDescription: 'Er is iets misgegaan bij het inloggen.',
+      }
+    );
   };
 
   const handleSignOut = async () => {
-    setLoading(true);
-    try {
-      await signOut();
-      success('Uitgelogd', 'Je bent succesvol uitgelogd.');
-    } catch (err) {
-      console.error('Logout error:', err);
-      error('Uitloggen mislukt', 'Er is iets misgegaan bij het uitloggen.');
-    } finally {
-      setLoading(false);
-    }
+    await executeSignOut(
+      async () => signOut(),
+      {
+        successMessage: 'Uitgelogd',
+        successDescription: 'Je bent succesvol uitgelogd.',
+        errorMessage: 'Uitloggen mislukt',
+        errorDescription: 'Er is iets misgegaan bij het uitloggen.',
+      }
+    );
   };
 
   if (!user) {
